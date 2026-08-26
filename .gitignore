@@ -1,0 +1,23 @@
+# Gradle / Android
+.gradle/
+build/
+app/build/
+local.properties
+*.iml
+.idea/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Native build workspace (large sources & intermediate artifacts)
+native-tools/work/
+
+# Bundled native binaries are build artifacts — rebuild via native-tools/build.sh
+app/src/main/jniLibs/*/lib*.so
+
+# ── Signing — NEVER commit these (needed privately to sign updates) ──
+keystore/
+keystore.properties
+*.jks
+*.keystore
+key.properties

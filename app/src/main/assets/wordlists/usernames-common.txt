@@ -1,0 +1,16 @@
+root
+admin
+administrator
+user
+test
+guest
+oracle
+postgres
+mysql
+ftp
+www-data
+ubuntu
+pi
+service
+operator
+maze

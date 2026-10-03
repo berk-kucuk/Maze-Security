@@ -210,6 +210,10 @@ assessment and authorised credential testing.
 
 ## License & disclaimer
 
+Copyright © 2026 Berk Küçük
+
+Released under the GNU General Public License v3.0 — see [LICENSE](LICENSE).
+
 Provided **as-is, for educational and authorised testing purposes only**. The authors accept no
 liability for misuse or for any damage caused by this software. By using it you agree to comply with
 all applicable laws and to test only systems you are authorised to assess.

@@ -42,7 +42,10 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            // R8: unused code and resources out (audit SEC2). Not obfuscated —
+            // see proguard-rules.pro.
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -91,4 +94,5 @@ dependencies {
     implementation(libs.sshj)
     implementation(libs.commons.net)
     debugImplementation(libs.androidx.ui.tooling)
+    testImplementation("junit:junit:4.13.2")
 }

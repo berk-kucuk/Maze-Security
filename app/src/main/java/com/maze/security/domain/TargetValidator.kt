@@ -15,6 +15,18 @@ object TargetValidator {
         """^(?=.{1,253}$)(([a-zA-Z0-9](-?[a-zA-Z0-9])*)\.)+[a-zA-Z]{2,}$"""
     )
 
+    /**
+     * A target for the network tools (nmap, hydra, medusa) is the last word on
+     * their command line. One that starts with "-" is read as one of the
+     * tool's own options — "-oN /sdcard/x" makes nmap write a file, "-iL" read
+     * one (audit SEC3). Ranges and CIDR ("10.0.0.1-50", "10.0.0.0/24") stay
+     * allowed; only the leading dash is refused.
+     */
+    fun isSafeToolArgument(raw: String): Boolean {
+        val t = raw.trim()
+        return t.isNotEmpty() && !t.startsWith("-") && t.none { it.isWhitespace() || it.isISOControl() }
+    }
+
     /** Cheap syntactic check for enabling the Continue button. */
     fun looksValid(raw: String): Boolean {
         val t = raw.trim()
@@ -33,7 +45,7 @@ object TargetValidator {
      */
     suspend fun resolve(raw: String): Target? = withContext(Dispatchers.IO) {
         val t = raw.trim()
-        if (t.isEmpty()) return@withContext null
+        if (!isSafeToolArgument(t)) return@withContext null
         val isIp = ipv4.matches(t) || (t.contains(":") && runCatching { InetAddress.getByName(t) }.isSuccess)
         val type = if (isIp) TargetType.IP else TargetType.DOMAIN
         return@withContext try {

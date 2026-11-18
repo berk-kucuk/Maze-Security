@@ -90,7 +90,11 @@ fun TargetScreen(
         scope.launch {
             val target = TargetValidator.resolve(v)
             resolving = false
-            if (target == null) { error = "Could not use that target"; return@launch }
+            if (target == null) {
+                error = if (TargetValidator.isSafeToolArgument(v)) "Could not use that target"
+                        else "A target cannot start with \"-\" or contain spaces"
+                return@launch
+            }
             container.history.add(target.raw)
             session.setTarget(target)
             onContinue()
